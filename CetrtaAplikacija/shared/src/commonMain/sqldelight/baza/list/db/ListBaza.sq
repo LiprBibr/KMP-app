@@ -1,0 +1,65 @@
+CREATE TABLE ListEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE ListItem (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    list_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
+    created_at TEXT NOT NULL,
+    
+    FOREIGN KEY(list_id) REFERENCES ListEntity(id)
+);
+
+-- List
+
+selectAllLists:
+SELECT *
+FROM ListEntity;
+
+selectListById:
+SELECT *
+FROM ListEntity
+WHERE id = ?;
+
+insertList:
+INSERT INTO ListEntity (title, created_at)
+VALUES (?, ?);
+
+updateList:
+UPDATE ListEntity
+SET title = ?, created_at = ?
+WHERE id = ?;
+
+deleteList:
+DELETE
+FROM ListEntity
+WHERE id = ?;
+
+-- ListItem
+
+selectAllItems:
+SELECT *
+FROM ListItem;
+
+selectItemsByListId:
+SELECT *
+FROM ListItem
+WHERE list_id = ?;
+
+insertItem:
+INSERT INTO ListItem (list_id, name, quantity, created_at)
+VALUES (?, ?, ?, ?);
+
+updateItem:
+UPDATE ListItem
+SET list_id = ?, name = ?, quantity = ?, created_at = ?
+WHERE id = ?;
+
+deleteItem:
+DELETE
+FROM ListItem
+WHERE id = ?;
